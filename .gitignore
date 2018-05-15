@@ -1,0 +1,15 @@
+.DS_Store
+
+.vs
+.vscode
+Build
+Library
+ProjectSettings
+Temp
+obj
+UnityPackageManager
+Builds
+
+*.csproj
+*.sln
+*.userprefs
