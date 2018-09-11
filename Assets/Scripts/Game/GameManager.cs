@@ -11,7 +11,6 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private bool isRunning;
 
-
     //==========================================================================
     public bool IsRunning { get { return isRunning; } }
     //==========================================================================
