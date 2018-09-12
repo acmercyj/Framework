@@ -554,8 +554,12 @@ class DataParser:
                     for field_value in field_value_list :
                         if field_type == "bytes":
                             item.__getattribute__(field_name).append(field_value.encode("utf8"))
-                        else:
-                            item.__getattribute__(field_name).append(int(float(field_value)))
+                        elif field_type == "string":
+                            item.__getattribute__(field_name).append(unicode(field_value))
+                        elif field_type == "float":
+                            item.__getattribute__(field_name).append(float(field_value))
+                        elif field_type == "int32":
+                            item.__getattribute__(field_name).append(int(field_value))
 
                 self._col += 1
 
