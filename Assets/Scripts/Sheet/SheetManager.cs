@@ -41,7 +41,6 @@ public class SheetManager : Singleton<SheetManager>
             {
                 Debugger.LogError("{0} id Not Exist!", id);
             }
-
         }
         else
         {

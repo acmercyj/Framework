@@ -558,8 +558,8 @@ class DataParser:
                             item.__getattribute__(field_name).append(unicode(field_value))
                         elif field_type == "float":
                             item.__getattribute__(field_name).append(float(field_value))
-                        elif field_type == "int32":
-                            item.__getattribute__(field_name).append(int(field_value))
+                        else:
+                            item.__getattribute__(field_name).append(int(float(field_value)))
 
                 self._col += 1
 
@@ -629,10 +629,15 @@ class DataParser:
                         else :
                             return int(field_value)
             elif field_type == "double" or field_type == "float" :
-                    if len(str(field_value).strip()) <=0 :
-                        return None
-                    else :
-                        return float(field_value)
+                if len(str(field_value).strip()) <=0 :
+                    return None
+                else :
+                    return float(field_value)
+            elif field_type == "bool" :
+                if len(str(field_value).strip()) <=0 :
+                    return None
+                else :
+                    return bool(field_value)
             elif field_type == "string" :
                 field_value = unicode(field_value)
                 if len(field_value) <= 0 :
@@ -652,7 +657,7 @@ class DataParser:
             raise
 
     def _WriteData2File(self, data) :
-        file_name = "../Assets/StreamingAssets/Sheet/" + self._sheet_name + ".data"
+        file_name = "../Assets/StreamingAssets/Sheet/" + self._sheet_name + ".bytes"
         file = open(file_name, 'wb+')
         file.write(data)
         file.close()

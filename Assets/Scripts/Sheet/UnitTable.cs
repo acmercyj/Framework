@@ -37,6 +37,14 @@ namespace Sheet
       get { return _array; }
     }
   
+    private bool _right = default(bool);
+    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"right", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(default(bool))]
+    public bool right
+    {
+      get { return _right; }
+      set { _right = value; }
+    }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }

@@ -49,7 +49,7 @@ public class SheetUtil
     /// <returns></returns>
     private static string GetSheetPath(string fileName)
     {
-        return Application.streamingAssetsPath + "/Sheet/" + fileName + ".data";
+        return Application.streamingAssetsPath + "/Sheet/" + fileName + ".bytes";
     }
 }
 
