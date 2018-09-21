@@ -36,6 +36,7 @@ public class GameSceneManager : Singleton<GameSceneManager>
     {
         SceneLoaded = action;
         SceneManager.LoadScene(name);
+        // SceneManager.LoadScene(name, LoadSceneMode.Additive);
     }
 }
 
