@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：视图UI定义
+ * 视图UI定义
  */
 
 public static class ViewDef

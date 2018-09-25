@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：模块定义
+ * 模块定义
  */
 
 public static class ModuleDef

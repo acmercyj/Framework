@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：调试器
+ * 调试器
  */
 
 namespace Base.Debug

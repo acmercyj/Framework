@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：主界面视图
+ * 主界面视图
  */
 
 using UnityEngine;

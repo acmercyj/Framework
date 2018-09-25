@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：Update
+ * Update
  */
 
 using UnityEngine;

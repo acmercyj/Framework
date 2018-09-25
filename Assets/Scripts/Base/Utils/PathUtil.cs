@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：路径工具类
+ * 路径工具类
  */
 
 namespace Base.Utils

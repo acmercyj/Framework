@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：资源加载
+ * 资源加载
  */
 
 using UnityEngine;

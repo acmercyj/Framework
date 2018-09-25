@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：单例
+ * 单例
  */
 
 namespace Base.Common

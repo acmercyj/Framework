@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：视图UI基类
+ * 视图UI基类
  */
 
 using UnityEngine;

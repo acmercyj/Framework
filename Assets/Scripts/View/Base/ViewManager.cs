@@ -1,5 +1,5 @@
 ﻿/**
- * 描述：视图UI管理
+ * 视图UI管理
  */
 
 using Base.Common;
