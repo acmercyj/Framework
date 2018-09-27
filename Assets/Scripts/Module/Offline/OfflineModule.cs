@@ -19,7 +19,7 @@ public class OfflineModule : Module
         //GameInput.Create();
 
         UpdateHelper.AddUpdateListener(Update);
-        //UpdateHelper.AddFixedUpdateListener(FixedUpdate);
+        UpdateHelper.AddFixedUpdateListener(FixedUpdate);
     }
 
     /// <summary>

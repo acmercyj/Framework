@@ -6,13 +6,9 @@ using Base.Common;
 
 public class GameManager : Singleton<GameManager>
 {
-    /// <summary>
-    /// 游戏是否正在进行
-    /// </summary>
-    private bool isRunning;
 
     //==========================================================================
-    public bool IsRunning { get { return isRunning; } }
+    public bool IsRunning { get; private set; }
     //==========================================================================
 
     /// <summary>
@@ -20,7 +16,16 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void CreateGame()
     {
-        isRunning = true;
+        IsRunning = true;
+        EntityManager.Instance.Init();
+    }
+
+    /// <summary>
+    /// 施放游戏
+    /// </summary>
+    public void ReleaseGame()
+    {
+        EntityManager.Instance.Release(); 
     }
 
     /// <summary>
@@ -35,6 +40,8 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void FixedUpdate(int fameIndex)
     {
+        if (!IsRunning)
+            return;
     }
 }
 
