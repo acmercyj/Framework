@@ -11,7 +11,8 @@ public class EntityManager : Singleton<EntityManager>
 {
     private Transform root;
     private Player player;
-    private Dictionary<int, Unit> map;
+    private Dictionary<int, Unit> enemyDict = new Dictionary<int, Unit>();
+    private Dictionary<int, Unit> unitDict = new Dictionary<int, Unit>();
     
     /// <summary>
     /// 初始化
@@ -41,10 +42,25 @@ public class EntityManager : Singleton<EntityManager>
     }
 
     /// <summary>
+    /// 创建敌人
+    /// </summary>
+    public void CreateEnemy(int id, Vector3 pos = default(Vector3), Vector3 forward = default(Vector3))
+    {
+
+    }
+
+    /// <summary>
     /// 清理
     /// </summary>
     public void Release()
     {
+        foreach(var unit in unitDict)
+        {
+            unit.Value.Release();
+        }
 
+        player = null;
+        enemyDict.Clear();
+        unitDict.Clear();
     }
 }
