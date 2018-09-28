@@ -12,14 +12,11 @@ public class Unit : Entity
     /// 逻辑对象对应的表现对象
     /// </summary>
     protected Visual visual;
-    /// <summary>
-    /// 表格数据
-    /// </summary>
-    protected UnitTable unitTable;
     //==========================================================================
     public Data<Vector3> Position;
     public Data<Vector3> Forward;
     public EUnit EUnit { get; protected set; }
+    public UnitTable Table { get; private set; }
     //==========================================================================
 
     /// <summary>
@@ -38,7 +35,7 @@ public class Unit : Entity
     /// </summary>
     public virtual void Create(int id)
     {
-        unitTable = SheetManager.Instance.GetSheetInfo<UnitTable>(id);
+        Table = SheetManager.Instance.GetSheetInfo<UnitTable>(id);
     }
 
     /// <summary>
@@ -51,25 +48,10 @@ public class Unit : Entity
     }
 
     /// <summary>
-    /// 创建表现对象
-    /// </summary>
-    /// <param name="path"></param>
-    public virtual void CreateVisual(Transform parent = null)
-    {
-        var prefab = ResourcesManager.Instance.Load<GameObject>(unitTable.model);
-        var model = GameObject.Instantiate<GameObject>(prefab);
-        visual = model.AddComponent<Visual>();
-        visual.Bind(this);
-        if (parent != null)
-            model.transform.SetParent(parent);
-    }
-
-    /// <summary>
     /// 改变位置
     /// </summary>
     private void ChangePosition(Vector3 position)
     {
-      
     }
 
     /// <summary>
@@ -77,6 +59,5 @@ public class Unit : Entity
     /// </summary>
     private void ChangeForward(Vector3 forward)
     {
-
     }
 }

@@ -1,5 +1,5 @@
 ﻿/**
- * 单位管理器
+ * 实体管理器
  */
 
 using System;
@@ -9,19 +9,9 @@ using System.Collections.Generic;
 
 public class EntityManager : Singleton<EntityManager>
 {
-    private Transform root;
     private Player player;
     private Dictionary<int, Unit> enemyDict = new Dictionary<int, Unit>();
     private Dictionary<int, Unit> unitDict = new Dictionary<int, Unit>();
-    
-    /// <summary>
-    /// 初始化
-    /// </summary>
-    public void Init()
-    {
-        if (root != null) return;
-        root = new GameObject("EntityRoot").transform;
-    }
 
     /// <summary>
     /// 创建实例
@@ -40,7 +30,7 @@ public class EntityManager : Singleton<EntityManager>
 
         player = CreateInstance<Player>();
         player.Create(id);
-        player.CreateVisual(root);
+        VisualManager.Instance.CreateVisual(player);
     }
 
     /// <summary>
@@ -50,7 +40,7 @@ public class EntityManager : Singleton<EntityManager>
     {
         var enemy = CreateInstance<Enemy>();
         enemy.Create(id);
-        enemy.CreateVisual(root);
+        VisualManager.Instance.CreateVisual(enemy);
     }
 
     /// <summary>
@@ -58,7 +48,7 @@ public class EntityManager : Singleton<EntityManager>
     /// </summary>
     public void Release()
     {
-        foreach(var unit in unitDict)
+        foreach (var unit in unitDict)
         {
             unit.Value.Release();
         }
