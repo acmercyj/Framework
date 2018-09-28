@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
     {
         IsRunning = true;
         EntityManager.Instance.Init();
+        EntityManager.Instance.CreatePlayer(100);
+        EntityManager.Instance.CreateEnemy(101);
     }
 
     /// <summary>

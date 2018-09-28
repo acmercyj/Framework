@@ -39,6 +39,8 @@ public class EntityManager : Singleton<EntityManager>
         if (player != null) return;
 
         player = CreateInstance<Player>();
+        player.Create(id);
+        player.CreateVisual(root);
     }
 
     /// <summary>
@@ -46,7 +48,9 @@ public class EntityManager : Singleton<EntityManager>
     /// </summary>
     public void CreateEnemy(int id, Vector3 pos = default(Vector3), Vector3 forward = default(Vector3))
     {
-
+        var enemy = CreateInstance<Enemy>();
+        enemy.Create(id);
+        enemy.CreateVisual(root);
     }
 
     /// <summary>

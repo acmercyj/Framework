@@ -2,10 +2,17 @@
  * 敌方对象基类
  */
 
-public class Enemy
+using UnityEngine;
+
+public class Enemy : Unit
 {
-    public Enemy() : base()
+    /// <summary>
+    /// 创建
+    /// </summary>
+    public override void Create(int id)
     {
+        base.Create(id);
+        EUnit = EUnit.Enemy;
     }
 }
 
