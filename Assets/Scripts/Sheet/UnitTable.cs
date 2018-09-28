@@ -22,28 +22,36 @@ namespace Sheet
       get { return _id; }
       set { _id = value; }
     }
-    private string _prefab = "";
-    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"prefab", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    private string _model = "";
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"model", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue("")]
-    public string prefab
+    public string model
     {
-      get { return _prefab; }
-      set { _prefab = value; }
+      get { return _model; }
+      set { _model = value; }
     }
-    private readonly global::System.Collections.Generic.List<int> _array = new global::System.Collections.Generic.List<int>();
-    [global::ProtoBuf.ProtoMember(3, Name=@"array", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public global::System.Collections.Generic.List<int> array
+    private readonly global::System.Collections.Generic.List<string> _behaviors = new global::System.Collections.Generic.List<string>();
+    [global::ProtoBuf.ProtoMember(3, Name=@"behaviors", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public global::System.Collections.Generic.List<string> behaviors
     {
-      get { return _array; }
+      get { return _behaviors; }
     }
   
-    private bool _right = default(bool);
-    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"right", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(default(bool))]
-    public bool right
+    private float _moveSpeed = (float)0;
+    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"moveSpeed", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.ComponentModel.DefaultValue((float)0)]
+    public float moveSpeed
     {
-      get { return _right; }
-      set { _right = value; }
+      get { return _moveSpeed; }
+      set { _moveSpeed = value; }
+    }
+    private float _maxHP = (float)0;
+    [global::ProtoBuf.ProtoMember(5, IsRequired = false, Name=@"maxHP", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.ComponentModel.DefaultValue((float)0)]
+    public float maxHP
+    {
+      get { return _maxHP; }
+      set { _maxHP = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
