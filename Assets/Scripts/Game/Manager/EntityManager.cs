@@ -10,7 +10,13 @@ using System.Collections.Generic;
 public class EntityManager : Singleton<EntityManager>
 {
     private Player player;
+    /// <summary>
+    /// 对人列表
+    /// </summary>
     private Dictionary<int, Unit> enemyDict = new Dictionary<int, Unit>();
+    /// <summary>
+    /// 所有单位列表
+    /// </summary>
     private Dictionary<int, Unit> unitDict = new Dictionary<int, Unit>();
 
     /// <summary>
@@ -30,7 +36,7 @@ public class EntityManager : Singleton<EntityManager>
 
         player = CreateInstance<Player>();
         player.Create(id);
-        VisualManager.Instance.CreateVisual(player);
+        unitDict.Add(player.ID, player);
     }
 
     /// <summary>
@@ -40,7 +46,8 @@ public class EntityManager : Singleton<EntityManager>
     {
         var enemy = CreateInstance<Enemy>();
         enemy.Create(id);
-        VisualManager.Instance.CreateVisual(enemy);
+        enemyDict.Add(enemy.ID, enemy);
+        unitDict.Add(enemy.ID, enemy);
     }
 
     /// <summary>
@@ -56,5 +63,16 @@ public class EntityManager : Singleton<EntityManager>
         player = null;
         enemyDict.Clear();
         unitDict.Clear();
+    }
+
+    /// <summary>
+    /// 逻辑帧更新
+    /// </summary>
+    public void FixedUpdate()
+    {
+        foreach(var unit in unitDict)
+        {
+            unit.Value.FixedUpdate();
+        }
     }
 }

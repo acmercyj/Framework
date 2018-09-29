@@ -2,7 +2,6 @@
  * 可视对象基类(渲染表现)
  */
 
-using Sheet;
 using UnityEngine;
 
 public class Visual : MonoBehaviour

@@ -66,7 +66,7 @@ public class ViewManager : Singleton<ViewManager>
     /// <summary>
     /// 显示视图
     /// </summary>
-    public void Push<T>(string name, params object[] args) where T : View, new()
+    public T Push<T>(string name, params object[] args) where T : View, new()
     {
         var view = viewMap.ContainsKey(name) ? viewMap[name] : Load<T>(name);
 
@@ -75,6 +75,8 @@ public class ViewManager : Singleton<ViewManager>
             view.Enter(args);
             viewStack.Push(view);
         }
+
+        return (T)view;
     }
 
     /// <summary>

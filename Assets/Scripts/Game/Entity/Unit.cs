@@ -8,10 +8,6 @@ using Sheet;
 
 public class Unit : Entity
 {
-    /// <summary>
-    /// 逻辑对象对应的表现对象
-    /// </summary>
-    protected Visual visual;
     //==========================================================================
     public Data<Vector3> Position;
     public Data<Vector3> Forward;
@@ -36,6 +32,7 @@ public class Unit : Entity
     public virtual void Create(int id)
     {
         Table = SheetManager.Instance.GetSheetInfo<UnitTable>(id);
+        VisualManager.Instance.CreateVisual(this);
     }
 
     /// <summary>
@@ -58,6 +55,13 @@ public class Unit : Entity
     /// 改变转向
     /// </summary>
     private void ChangeForward(Vector3 forward)
+    {
+    }
+    
+    /// <summary>
+    /// 逻辑帧更新
+    /// </summary>
+    public void FixedUpdate()
     {
     }
 }

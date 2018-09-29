@@ -43,6 +43,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (!IsRunning)
             return;
+        EntityManager.Instance.FixedUpdate();
     }
 }
 
