@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     public void CreateGame()
     {
         IsRunning = true;
+        ViewManager.Instance.Push<GameInput>(ViewDef.GameInput);
         EntityManager.Instance.CreatePlayer(100);
         EntityManager.Instance.CreateEnemy(101);
     }

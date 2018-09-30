@@ -10,10 +10,10 @@ public abstract class View : MonoBehaviour
     /// 进入页面
     /// </summary>
     /// <param name="args"></param>
-    public virtual void Enter(params object[] args) { }
+    public virtual void Enter(params object[] args) { gameObject.SetActive(true); }
 
     /// <summary>
     /// 退出页面
     /// </summary>
-    public virtual void Exit() { }
+    public virtual void Exit() { gameObject.SetActive(false); }
 }

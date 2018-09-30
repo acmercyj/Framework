@@ -19,44 +19,30 @@ public class GameInput : View
     /// 移动摇杆
     /// </summary>
     public GameJoystick moveJoystick;
-    
     /// <summary>
     /// 键盘按钮映射
     /// </summary>
     private static Dictionary<KeyCode, KeyState> mapKeyState = new Dictionary<KeyCode, KeyState>();
+
+    //==========================================================================
     /// <summary>
     /// 为调用者抛出虚拟按键事件
     /// </summary>
     public static Action<int, object> OnVKey { get; set; }
     public static GameInput Instance { get; private set; }
     //==========================================================================
-    /// <summary>
-    /// 实例化
-    /// </summary>
-    public static void Create()
-    {
-        if (Instance != null) return;
 
-        Instance = ViewManager.Instance.Push<GameInput>("View/Input/GameInput");
+    public void Awake()
+    {
+        Instance = this;
     }
 
-    /// <summary>
-    /// 施放当前实例
-    /// </summary>
-    public static void Release()
+    public void OnDestroy()
     {
-        if (Instance != null)
-        {
-            GameObject.Destroy(Instance);
-            Instance = null;
-        }
-
+        Instance = null;
         OnVKey = null;
     }
 
-    /// <summary>
-    /// Ons the enable.
-    /// </summary>
     private void OnEnable()
     {
         //moveJoystick.OnMove = OnJoystickMove;
@@ -69,9 +55,6 @@ public class GameInput : View
         //skillBtn.OnUp = OnSkillUp;
     }
 
-    /// <summary>
-    /// Ons the disable.
-    /// </summary>
 	private void OnDisable()
     {
         //moveJoystick.OnMove = null;
