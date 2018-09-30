@@ -5,6 +5,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class GameJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
@@ -53,7 +54,7 @@ public class GameJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     /// <param name="data">Data.</param>
     public void OnPointerUp(PointerEventData data)
     {
-        //iTween.MoveTo(Center.gameObject, iTween.Hash("position", startPos, "time", 0.1f, "easeType", iTween.EaseType.easeOutCubic));
+        Center.DOMove(startPos, 0.1f).SetEase(Ease.OutSine);
         if (OnUp != null)
             OnUp();
     }

@@ -13,5 +13,26 @@ public class Player : Unit
     {
         base.Create(id);
         EUnit = EUnit.Player;
+        GameInput.OnVKey = OnVkey;
+    }
+
+    /// <summary>
+    /// 输入控制
+    /// </summary>
+    private void OnVkey(EVKey vkey, object arg)
+    {
+        switch(vkey)
+        {
+            case EVKey.Move:
+                break;
+            case EVKey.MoveX:
+                break;
+            case EVKey.MoveY:
+                break;
+            case EVKey.MoveStart:
+                break;
+            case EVKey.MoveEnd:
+                break;
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/**
- * 虚拟按键
+ * 虚拟按键枚举
  */
 
 public enum EVKey
@@ -9,8 +9,8 @@ public enum EVKey
     Move,
     MoveX,
     MoveY,
-    MoveDown,
-    MoveUp,
+    MoveStart,
+    MoveEnd,
     //=====动作相关===== 
     ActionDown,
     ActionDrag,

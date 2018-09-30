@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 struct KeyState
 {
-    public int key;
+    public EVKey key;
     public float arg;
     public bool state;
 }
@@ -28,43 +28,25 @@ public class GameInput : View
     /// <summary>
     /// 为调用者抛出虚拟按键事件
     /// </summary>
-    public static Action<int, object> OnVKey { get; set; }
+    public static Action<EVKey, object> OnVKey { get; set; }
     public static GameInput Instance { get; private set; }
     //==========================================================================
 
     public void Awake()
     {
         Instance = this;
+        moveJoystick.OnDown = OnJoystickMoveStart;
+        moveJoystick.Drag = OnJoystickMove;
+        moveJoystick.OnUp = OnJoystickMoveEnd;
     }
 
     public void OnDestroy()
     {
         Instance = null;
         OnVKey = null;
-    }
-
-    private void OnEnable()
-    {
-        //moveJoystick.OnMove = OnJoystickMove;
-        //moveJoystick.OnMoveStart = OnJoystickMoveStart;
-        //moveJoystick.OnMoveEnd = OnJoystickMoveEnd;
-        //attackBtn.OnDown = OnAttackDown;
-        //attackBtn.Drag = OnAttackDrag;
-        //attackBtn.OnUp = OnAttackUp;
-        //skillBtn.OnDown = OnSkillDown;
-        //skillBtn.OnUp = OnSkillUp;
-    }
-
-	private void OnDisable()
-    {
-        //moveJoystick.OnMove = null;
-        //moveJoystick.OnMoveStart = null;
-        //moveJoystick.OnMoveEnd = null;
-        //attackBtn.OnDown = null;
-        //attackBtn.Drag = null;
-        //attackBtn.OnUp = null;
-        //skillBtn.OnDown = null;
-        //skillBtn.OnUp = null;
+        moveJoystick.OnDown = null;
+        moveJoystick.Drag = null;
+        moveJoystick.OnUp = null;
     }
 
     /// <summary>
@@ -72,7 +54,7 @@ public class GameInput : View
     /// </summary>
     /// <param name="vkey">虚拟按键的键值</param>
     /// <param name="arg">虚拟按键参数</param>
-    private void HandleVKey(int vkey, object arg = null)
+    private void HandleVKey(EVKey vkey, object arg = null)
     {
         if (OnVKey != null)
         {
@@ -80,20 +62,21 @@ public class GameInput : View
         }
     }
 
+    #region 摇杆控制
     /// <summary>
     /// 摇杆移动
     /// </summary>
-    public void OnJoystickMove(Vector2 data)
+    public void OnJoystickMove(Vector2 dir)
     {
-        //HandleVKey(GameVKey.Move, data);
+        HandleVKey(EVKey.Move, dir);
     }
 
     /// <summary>
     /// 移动开始
     /// </summary>
-    public void OnJoystickMoveStart()
+    public void OnJoystickMoveStart(Vector2 dir)
     {
-        //HandleVKey(GameVKey.MoveStart);
+        HandleVKey(EVKey.MoveStart);
     }
 
     /// <summary>
@@ -101,75 +84,33 @@ public class GameInput : View
     /// </summary>
     public void OnJoystickMoveEnd()
     {
-        //HandleVKey(GameVKey.MoveEnd);
+        HandleVKey(EVKey.MoveEnd);
     }
+    #endregion
 
-    /// <summary>
-    /// 攻击按下
-    /// </summary>
-    public void OnAttackDown()
-    {
-        //attackBtn.Down();
-        //HandleVKey(GameVKey.ActionDown, 0);
-    }
-
-    /// <summary>
-    /// 攻击摇杆
-    /// </summary>
-    public void OnAttackDrag(Vector2 dir)
-    {
-        //HandleVKey(GameVKey.ActionDrag, dir);
-    }
-
-    /// <summary>
-    /// 攻击抬起
-    /// </summary>
-    public void OnAttackUp()
-    {
-        //attackBtn.Up();
-        //HandleVKey(GameVKey.ActionUp, 0);
-    }
-
-    /// <summary>
-    /// 技能按下
-    /// </summary>
-    public void OnSkillDown()
-    {
-        //HandleVKey(GameVKey.ActionDown, 1);
-    }
-
-    /// <summary>
-    /// 技能抬起
-    /// </summary>
-    public void OnSkillUp()
-    {
-        //HandleVKey(GameVKey.ActionUp, 1);
-    }
-    //==========================================================================
-    //键盘控制
     #region 键盘控制
     private void Update()
     {
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
-        //HandleVKey(KeyCode.A, GameVKey.MoveX, -1, GameVKey.MoveX, 0);
-        //HandleVKey(KeyCode.D, GameVKey.MoveX, 1, GameVKey.MoveX, 0);
-        //HandleVKey(KeyCode.W, GameVKey.MoveY, 1, GameVKey.MoveY, 0);
-        //HandleVKey(KeyCode.S, GameVKey.MoveY, -1, GameVKey.MoveY, 0);
+        HandleVKey(KeyCode.A, EVKey.MoveX, -1, EVKey.MoveX, 0);
+        HandleVKey(KeyCode.D, EVKey.MoveX, 1, EVKey.MoveX, 0);
+        HandleVKey(KeyCode.W, EVKey.MoveY, 1, EVKey.MoveY, 0);
+        HandleVKey(KeyCode.S, EVKey.MoveY, -1, EVKey.MoveY, 0);
 #endif
     }
 
     /// <summary>
     /// 将【键盘按键】转化为【虚拟按键】
     /// </summary>
-    private void HandleVKey(KeyCode key, int pressKey, float pressArg, int releaseKey, float releaseArg)
+    private void HandleVKey(KeyCode key, EVKey pressKey, float pressArg, EVKey releaseKey, float releaseArg)
     {
-        //if (!mapKeyState.ContainsKey(key)) mapKeyState.Add(key, new KeyState() { key = GameVKey.None, arg = 0, state = false });
+        if (!mapKeyState.ContainsKey(key)) mapKeyState.Add(key, new KeyState() { key = EVKey.None, arg = 0, state = false });
 
         if (Input.GetKey(key))
         {
             if (!mapKeyState[key].state)
             {
-                //HandleVKey(GameVKey.MoveStart);
+                HandleVKey(EVKey.MoveStart);
                 var keyState = mapKeyState[key];
                 keyState.state = true;
                 keyState.key = pressKey;
@@ -185,7 +126,7 @@ public class GameInput : View
                 var keyState = mapKeyState[key];
                 keyState.state = false;
                 keyState.arg = 0;
-                //keyState.key = GameVKey.None;
+                keyState.key = EVKey.None;
                 mapKeyState[key] = keyState;
                 HandleVKey(releaseKey, releaseArg);
                 var end = true;
@@ -199,8 +140,8 @@ public class GameInput : View
                         end = false;
                     }
                 }
-                //if (end)
-                    //HandleVKey(GameVKey.MoveEnd);
+                if (end)
+                    HandleVKey(EVKey.MoveEnd);
             }
         }
     }

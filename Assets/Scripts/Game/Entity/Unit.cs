@@ -8,6 +8,8 @@ using Sheet;
 
 public class Unit : Entity
 {
+    protected StateManager stateManager;
+
     //==========================================================================
     public Data<Vector3> Position;
     public Data<Vector3> Forward;
@@ -22,8 +24,7 @@ public class Unit : Entity
     {
         Position = new Data<Vector3>();
         Forward = new Data<Vector3>();
-        Position.AddChangeListener(ChangePosition);
-        Forward.AddChangeListener(ChangeForward);
+        stateManager = new StateManager(this);
     }
 
     /// <summary>
@@ -33,6 +34,9 @@ public class Unit : Entity
     {
         Table = SheetManager.Instance.GetSheetInfo<UnitTable>(id);
         VisualManager.Instance.CreateVisual(this);
+        stateManager.AddState(EState.Move);
+        Position.AddChangeListener(ChangePosition);
+        Forward.AddChangeListener(ChangeForward);
     }
 
     /// <summary>
