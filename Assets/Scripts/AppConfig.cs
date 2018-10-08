@@ -4,6 +4,7 @@
 
 using ProtoBuf;
 using UnityEngine;
+using Base.Utils;
 
 [ProtoContract]
 public class AppConfig
@@ -11,14 +12,15 @@ public class AppConfig
     [ProtoMember(1)]
     public string Version = "1.0.0";
     [ProtoMember(2)]
-    public string Language = "CN";
+    public string Language = "EN";
     [ProtoMember(3)]
     public bool EnableBgMusic = true;
+    [ProtoMember(4)]
+    public bool EnableSound = true;
 
+    private static string path = Application.persistentDataPath + "/AppConfig.bytes";
     //==========================================================================
-    private static AppConfig mValue = new AppConfig();
-    public static AppConfig Value { get { return mValue; } }
-    public readonly static string Path = Application.persistentDataPath + "/AppConfig.data";
+    public static AppConfig Value { get; private set; }
     //==========================================================================
 
     /// <summary>
@@ -26,21 +28,20 @@ public class AppConfig
     /// </summary>
     public static void Init()
     {
-        //if (!FileUtils.Exists(Path))
-        //{
-        //    Save();
-        //    return;
-        //}
-
-        //byte[] data = FileUtils.ReadFile(Path);
-        //if (data != null && data.Length > 0)
-        //{
-        //    var config = PBSerializer.NDeserialize<AppConfig>(data);
-        //    if (config != null)
-        //    {
-        //        mValue = config;
-        //    }
-        //}
+        Value = new AppConfig();
+        if (FileUtil.Exists(path))
+        {
+            var data = FileUtil.ReadFile(path);
+            if (data != null && data.Length > 0)
+            {
+                var config = ProtobufUtil.NDeserialize<AppConfig>(data);
+                if (config != null) Value = config;
+            }
+        }
+        else
+        {
+            Save();
+        }
     }
 
     /// <summary>
@@ -48,11 +49,11 @@ public class AppConfig
     /// </summary>
     public static void Save()
     {
-        //if (mValue != null)
-        //{
-        //    var data = PBSerializer.NSerialize<AppConfig>(mValue);
-        //    FileUtils.SaveFile(Path, data);
-        //}
+        if (Value != null)
+        {
+            var data = ProtobufUtil.NSerialize<AppConfig>(Value);
+            FileUtil.SaveFile(path, data);
+        }
     }
 }
 

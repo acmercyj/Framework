@@ -3,6 +3,7 @@
  */
 
 using Base.Common;
+using Base.Debug;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class ViewManager : Singleton<ViewManager>
     /// <summary>
     /// 视图UI映射
     /// </summary>
-    private Dictionary<string, View> viewMap = new Dictionary<string, View>();
+    private Dictionary<string, View> viewDict = new Dictionary<string, View>();
     /// <summary>
     /// 视图UI堆栈
     /// </summary>
@@ -24,16 +25,23 @@ public class ViewManager : Singleton<ViewManager>
     /// <summary>
     /// 加载页面
     /// </summary>
-    private T Load<T>(string name) where T : View, new()
+    private T Load<T>(string path) where T : View, new()
     {
         T ui = null;
-        var prefab = ResourcesManager.Instance.Load<T>(name);
+        var prefab = ResourcesManager.Instance.Load<T>(path);
         if (prefab != null)
         {
             var go = GameObject.Instantiate(prefab);
-            ui = go.GetComponent<T>();
             AddChild(go.transform);
-            viewMap.Add(name, ui);
+            ui = go.GetComponent<T>();
+            if (ui != null)
+            {
+                viewDict.Add(path, ui);
+            }
+            else
+            {
+                Debugger.LogError("[{0}] No Component [{1}]", path, typeof(T).ToString());
+            }
         }
         return ui;
     }
@@ -45,7 +53,7 @@ public class ViewManager : Singleton<ViewManager>
     {
         if (child == null)
         {
-            Debug.LogError("Node Not Found");
+            Debugger.LogError("Child Not Exists");
             return;
         }
 
@@ -54,7 +62,7 @@ public class ViewManager : Singleton<ViewManager>
             var canvas = GameObject.Find("Canvas");
             if (canvas == null)
             {
-                Debug.LogError("Canvas Not Found");
+                Debugger.LogError("Canvas Not Exists");
                 return;
             }
             viewRoot = canvas.transform;
@@ -66,13 +74,13 @@ public class ViewManager : Singleton<ViewManager>
     /// <summary>
     /// 显示视图
     /// </summary>
-    public T Push<T>(string name, params object[] args) where T : View, new()
+    public T Push<T>(string path, params object[] args) where T : View, new()
     {
-        var view = viewMap.ContainsKey(name) ? viewMap[name] : Load<T>(name);
+        var view = viewDict.ContainsKey(path) ? viewDict[path] : Load<T>(path);
 
         if (view != null)
         {
-            view.Enter(args);
+            view.Open(args);
             viewStack.Push(view);
         }
 
@@ -84,11 +92,9 @@ public class ViewManager : Singleton<ViewManager>
     /// </summary>
     public void Pop()
     {
-        if (viewStack.Count == 0)
-            return;
-
+        if (viewStack.Count == 0) return;
         var view = viewStack.Peek();
-        view.Exit();
+        view.Close();
         viewStack.Pop();
     }
 
@@ -102,17 +108,13 @@ public class ViewManager : Singleton<ViewManager>
         {
             while(viewStack.Count > 0)
             {
-                var view = viewStack.Peek();
-                view.Exit();
-                viewStack.Pop();
+                Pop();
             }
             Push<T>(name, args);
         }
         else
         {
-            var view = viewStack.Peek();
-            view.Exit();
-            viewStack.Pop();
+            Pop();
             Push<T>(name, args);
         }
     }
@@ -122,12 +124,12 @@ public class ViewManager : Singleton<ViewManager>
     /// </summary>
     public void Clear()
     {
-        foreach(var view in viewMap.Values)
+        foreach(var view in viewDict.Values)
         {
-            GameObject.Destroy(view.gameObject);
+            view.Destroy();
         }
 
-        viewMap.Clear();
+        viewDict.Clear();
         viewStack.Clear();
     }
 }

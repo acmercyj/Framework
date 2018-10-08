@@ -7,13 +7,32 @@ using UnityEngine;
 public abstract class View : MonoBehaviour
 {
     /// <summary>
-    /// 进入页面
+    /// 视图是否打开着 
     /// </summary>
-    /// <param name="args"></param>
-    public virtual void Enter(params object[] args) { gameObject.SetActive(true); }
+    public bool IsOpen { get { return gameObject.activeSelf; } }
+    
+    /// <summary>
+    /// 打开视图 
+    /// </summary>
+    public virtual void Open(params object[] args)
+    {
+        if (!IsOpen)
+            gameObject.SetActive(true);
+
+        transform.SetAsLastSibling();
+    }
 
     /// <summary>
-    /// 退出页面
+    /// 关闭视图
     /// </summary>
-    public virtual void Exit() { gameObject.SetActive(false); }
+    public virtual void Close()
+    {
+        if (IsOpen)
+            gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 销毁页面视图
+    /// </summary>
+    public virtual void Destroy() { GameObject.Destroy(gameObject); }
 }

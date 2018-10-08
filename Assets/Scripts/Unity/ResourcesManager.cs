@@ -14,16 +14,8 @@ public class ResourcesManager : Singleton<ResourcesManager>
     public T Load<T>(string path) where T : Object
     {
         var prefab = Resources.Load<T>(path);
-        Debugger.Log(prefab != null, string.Format("未找到指定路径[{0}]下的prefab", path));
+        Debugger.Log(prefab != null, string.Format("[{0}] Not Exists", path));
         return prefab;
-    }
-
-    /// <summary>
-    /// 加载所有
-    /// </summary>
-    public T[] LoadAll<T>(string path) where T : Object
-    {
-        return Resources.LoadAll<T>(path);
     }
 }
 
