@@ -28,7 +28,7 @@ public class ViewManager : Singleton<ViewManager>
     private T Load<T>(string path) where T : View, new()
     {
         T ui = null;
-        var prefab = ResourcesManager.Instance.Load<T>(path);
+        var prefab = ResourcesManager.Instance.Load<GameObject>(path);
         if (prefab != null)
         {
             var go = GameObject.Instantiate(prefab);
@@ -106,7 +106,7 @@ public class ViewManager : Singleton<ViewManager>
     {
         if (clear)
         {
-            while(viewStack.Count > 0)
+            while (viewStack.Count > 0)
             {
                 Pop();
             }
@@ -124,7 +124,7 @@ public class ViewManager : Singleton<ViewManager>
     /// </summary>
     public void Clear()
     {
-        foreach(var view in viewDict.Values)
+        foreach (var view in viewDict.Values)
         {
             view.Destroy();
         }

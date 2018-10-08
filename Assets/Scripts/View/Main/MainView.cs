@@ -15,7 +15,7 @@ public class MainView : View
         {
             ViewManager.Instance.Clear();
             ViewManager.Instance.Push<FightView>(ViewDef.FightView);
-            var fightModule = ModuleManager.Instance.GetModule<OfflineModule>(ModuleDef.OfflineModule);
+            var fightModule = ModuleManager.Instance.GetModule<OfflineModule>();
             fightModule.StartGame();
         });
     }
