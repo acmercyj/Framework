@@ -9,6 +9,7 @@
 * 配置python目录下（默认目录的话应该在C:\Python27）Scripts/pip的环境变量
 * 安装protobuf （pip install google  和   pip install protobuf ）
 * 安装xlrd（pip install xlrd）
+* mac环境下 brew install protobuf
 
 ### 使用事项
 * excel 的前四行用于结构定义, 其余则为数据
