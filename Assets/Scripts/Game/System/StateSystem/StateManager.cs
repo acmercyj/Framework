@@ -19,6 +19,9 @@ public class StateManager
     private Unit owner;
     private LinkedList<MoveFunc> moveFuncList = new LinkedList<MoveFunc>();
 
+    /// <summary>
+    /// 构造
+    /// </summary>
     public StateManager(Unit owner)
     {
         this.owner = owner;
@@ -42,9 +45,8 @@ public class StateManager
     }
 
     /// <summary>
-    /// 
+    /// 根据状态表和移动回调创建移动结构 
     /// </summary>
-    /// <returns></returns>
     private MoveFunc CreateMoveFunc(StateTable table, Action moveFunc)
     {
         var mf = new MoveFunc();
@@ -52,5 +54,13 @@ public class StateManager
         mf.priority = table.movePriority;
         mf.func = moveFunc;
         return mf;
+    }
+    
+    /// <summary>
+    /// 逻辑帧更新
+    /// </summary>
+    public void FixedUpdate()
+    {
+
     }
 }

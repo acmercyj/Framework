@@ -12,7 +12,7 @@ public class Enemy : Unit
     public override void Create(int id)
     {
         base.Create(id);
-        EUnit = EUnit.Enemy;
+        UnitType = EUnit.Enemy;
     }
 }
 

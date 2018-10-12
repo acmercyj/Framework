@@ -12,7 +12,7 @@ public class Player : Unit
     public override void Create(int id)
     {
         base.Create(id);
-        EUnit = EUnit.Player;
+        UnitType = EUnit.Player;
         GameInput.OnVKey = OnVkey;
     }
 

@@ -76,7 +76,7 @@ public class GameInput : View
     /// </summary>
     public void OnJoystickMoveStart(Vector2 dir)
     {
-        HandleVKey(EVKey.MoveStart);
+        HandleVKey(EVKey.MoveStart, dir);
     }
 
     /// <summary>
