@@ -1,0 +1,6 @@
+{
+    "ClientCS": "../Assets/Scripts/Sheet/",
+    "ClientData": "../Assets/StreamingAssets/Sheet/",
+    "ServerCS": "",
+    "ServerData": ""
+}

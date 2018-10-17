@@ -73,6 +73,7 @@
 import xlrd # for read excel
 import sys
 import os
+import json
 
 # TAP的空格数
 TAP_BLANK_NUM = 4
@@ -434,7 +435,7 @@ class DataParser:
             print "load module(%s) failed"%(self._module_name)
             raise
 
-    def Parse(self) :
+    def Parse(self, output) :
         """对外的接口:解析数据"""
         # LOG_INFO("begin parse, row_count = %d, col_count = %d", self._row_count, self._col_count)
 
@@ -463,7 +464,7 @@ class DataParser:
         # self._WriteReadableData2File(str(item_array))
 
         data = item_array.SerializeToString()
-        self._WriteData2File(data)
+        self._WriteData2File(data, output)
 
 
         #comment this line for test .by kevin at 2013年1月12日 17:23:35
@@ -656,8 +657,9 @@ class DataParser:
             print "parse cell(%u, %u) error, please check it, maybe type is wrong."%(row, col)
             raise
 
-    def _WriteData2File(self, data) :
-        file_name = "../Assets/StreamingAssets/Sheet/" + self._sheet_name + ".bytes"
+    def _WriteData2File(self, data, output) :
+        # file_name = "../Assets/Resources/Sheet/" + self._sheet_name + ".bytes"
+        file_name = output + self._sheet_name + ".bytes"
         file = open(file_name, 'wb+')
         file.write(data)
         file.close()
@@ -672,21 +674,25 @@ class DataParser:
 
 if __name__ == '__main__' :
     """入口"""
+
+    f = open("./config.json")
+    config = json.load(f)
+    clientCS = config["ClientCS"]
+    clientData = config["ClientData"]
+    serverCS = config["ServerCS"]
+    serverData = config["ServerData"]
+
     if len(sys.argv) < 3 :
         print "Usage: %s sheet_name(should be upper) xls_file" %(sys.argv[0])
         sys.exit(-1)
+
+    sheet_name =  sys.argv[1]
+    xls_file_path =  sys.argv[2]
 
     # option 0 生成proto和data 1 只生成proto 2 只生成data
     op = 0
     if len(sys.argv) > 3 :
         op = int(sys.argv[3])
-
-    sheet_name =  sys.argv[1]
-    # if (not sheet_name.isupper()):
-    #     print "sheet_name should be upper"
-    #     sys.exit(-2)
-
-    xls_file_path =  sys.argv[2]
 
     if op == 0 or op == 1:
         try :
@@ -697,16 +703,19 @@ if __name__ == '__main__' :
             print e
             sys.exit(-3)
 
-        print "Interpreter Success!!!"
+        # print "Interpreter Success!!!"
 
     if op == 0 or op == 2:
         try :
             parser = DataParser(xls_file_path, sheet_name)
-            parser.Parse()
+            parser.Parse(clientData)
+            if len(serverData) > 0 :
+                parser.Parse(serverData)   
         except BaseException, e :
             print "Parse Failed!!!"
             print e
             sys.exit(-4)
 
-        print "Parse Success!!!"
+        # print "Parse Success!!!"
+    print "Success!"
 
