@@ -2,10 +2,9 @@
  * 玩家对象基类
  */
 
-using UnityEngine;
-
 public class Player : Unit
 {
+    private bool inputMoveFlag = false;
     /// <summary>
     /// 创建
     /// </summary>
@@ -14,6 +13,7 @@ public class Player : Unit
         base.Create(id);
         UnitType = EUnit.Player;
         GameInput.OnVKey = OnVkey;
+        AddState(EState.Move, DoMove);
     }
 
     /// <summary>
@@ -34,5 +34,13 @@ public class Player : Unit
             case EVKey.MoveEnd:
                 break;
         }
+    }
+
+    /// <summary>
+    /// 移动操作
+    /// </summary>
+    private void DoMove()
+    {
+
     }
 }

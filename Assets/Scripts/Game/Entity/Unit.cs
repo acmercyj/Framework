@@ -9,9 +9,8 @@ using System;
 
 public class Unit : Entity
 {
-    private bool isMoveBtnDown = false;
     protected StateManager stateManager;
-
+    protected PropertyManager propertyManager;
     //==========================================================================
     public Data<Vector3> Position;
     public Data<Vector3> Forward;
@@ -29,6 +28,7 @@ public class Unit : Entity
         Forward = new Data<Vector3>();
         Dead = new Data<bool>();
         stateManager = new StateManager(this);
+        propertyManager = new PropertyManager();
     }
 
     /// <summary>
@@ -41,7 +41,6 @@ public class Unit : Entity
         Dead.Value = false;
         Position.AddChangeListener(ChangePosition);
         Forward.AddChangeListener(ChangeForward);
-        AddState(EState.Move, DoMove);
     }
 
     /// <summary>
@@ -86,13 +85,5 @@ public class Unit : Entity
         {
             stateManager.FixedUpdate();
         }
-    }
-
-    /// <summary>
-    /// 移动操作
-    /// </summary>
-    private void DoMove()
-    {
-
     }
 }

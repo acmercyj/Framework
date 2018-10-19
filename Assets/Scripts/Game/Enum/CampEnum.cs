@@ -1,5 +1,5 @@
 ﻿/**
- * 兵营枚举
+ * 阵容枚举
  */
 
 public enum ECamp
