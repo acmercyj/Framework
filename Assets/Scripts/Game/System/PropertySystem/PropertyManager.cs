@@ -29,6 +29,6 @@ public class PropertyManager
 
     public float GetPropertyValua(EProperty id)
     {
-
+        return 0;
     }
 }
