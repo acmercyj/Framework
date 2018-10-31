@@ -1,6 +1,6 @@
 {
     "ClientCS": "../Assets/Scripts/Sheet/",
-    "ClientData": "../Assets/StreamingAssets/Sheet/",
+    "ClientData": "../Assets/Resources/Sheet/",
     "ServerCS": "",
     "ServerData": ""
 }
