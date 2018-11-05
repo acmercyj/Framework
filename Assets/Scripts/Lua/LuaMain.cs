@@ -2,21 +2,39 @@
  * Lua主入口
  */
 
-using UnityEngine;
 using XLua;
+using Base.Common;
 
-public class LuaMain : MonoBehaviour
+public class LuaMain : Singleton<LuaMain>
 {
-    [SerializeField] TextAsset luaScript;
     private LuaEnv luaEnv = new LuaEnv();
-    public static LuaMain Instance { get; private set; }
 
     /// <summary>
     /// 初始化Lua环境
     /// </summary>
-    private void Awake()
+    public void Init()
     {
-        Instance = this;
+        LuaTable meta = luaEnv.NewTable();
+        meta.Set("__index", luaEnv.Global);
+        //scriptEnv.SetMetaTable(meta)
+    }
 
+    /// <summary>
+    /// 更新
+    /// </summary>
+    public void Update()
+    {
+        if (luaEnv != null)
+        {
+            luaEnv.Tick();
+        }
+    }
+
+    /// <summary>
+    /// 销毁
+    /// </summary>
+    public void OnDestroy()
+    {
+        if (luaEnv != null) luaEnv.Dispose();
     }
 }
